@@ -1,0 +1,17 @@
+filesize_from_dq2list.py   
+
+  need dq2 set up
+  opens input list containing all the names of datasets
+  apply dq2-list-file on each of them
+  takes only file size from the output of dq2-list-files
+
+
+filesize_from_dq2list1.py   
+  starts from the output file of filesize_from_dq2list.py 
+  takes only the size and strips off strings. 
+
+     
+filesize_from_dq2list2.py    
+  takes the byte information from previous stage
+  adds all byte and converts to TB
+ 

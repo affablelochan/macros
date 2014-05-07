@@ -1,0 +1,20 @@
+
+#script to add pput at the begenning of all the statement in file 'lochan'
+#!/bin/bash
+
+clear
+filen=''
+
+initialpart='rfdir /castor/cern.ch/grid/atlas/tzero/prod1/perm/data10_7TeV/express_express/'
+
+
+for i in $(cat raj)
+do
+
+
+    filen="$initialpart""${i}"
+    echo "$filen" >>lochann
+
+done
+
+

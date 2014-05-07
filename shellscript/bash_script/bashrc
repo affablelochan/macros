@@ -1,0 +1,20 @@
+# .bashrc
+
+# User specific aliases and functions
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+if [[ -f ~/.petashell/.bashrc.petashell ]]; then
+	source ~/.petashell/.bashrc.petashell
+fi
+
+
+export PATH=$PATH:/home/lochan/root/bin
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/root/lib
+export ROOTSYS=/home/lochan/root
+
+if [[ -f ~/.pcommands/.bashrc.pcommands ]]; then
+	source ~/.pcommands/.bashrc.pcommands
+fi

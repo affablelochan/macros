@@ -1,0 +1,114 @@
+// -*- C++ -*-
+//i found how to change the x axis limits without affecting the data. 
+#include <TROOT.h>
+#include <TFile.h>
+#include <TH2D.h>
+#include <TH1F.h>
+#include <TH1.h>
+#include <TProfile2D.h>
+#include <TStyle.h>
+#include <TCanvas.h>
+#include <TNtuple.h>
+#include <TString.h>
+#include <iostream>
+#include <cstring>
+#include <string>
+#include <TMath>
+
+
+
+
+void fitfunction(){
+
+
+
+         TFile* f = new TFile("trijet.root");
+         f->TFile::Open();
+
+
+
+                         float L[5];
+                         float L15= .914357*.0987;
+                         float L45= .9188*17.1763;
+                         float L65= .915148*72.9970;
+                         float L95= .9239*507.72;
+                         float L125= .9284*707.2509;
+                         float L25= .917114*1.5374;
+                         L[0]=L15/L25;
+                         L[1]=L25/L45;
+                         L[2]=L45/L65;L[3]=L65/L95;L[4]=L95/L125;
+                         float F[]={20,40,60,80,100};//this is for setting range for plotting
+                         string C[]= {"15","25","45","65","95","125"};
+
+       for(int i=3;i<5;i++)
+       {
+
+          string lower = "pT"+C[i]+"_y1"; cout<<lower<<endl;                    //1111111111111
+          string upper = "pT"+C[i+1]+"_y1"; cout<<upper<<endl;                   //1111111111111
+
+            TH1F *h1   = (TH1F*)f->Get(lower.c_str());
+            TH1F *h2   = (TH1F*)f->Get(upper.c_str());
+
+
+                 int c=h1->GetXaxis()->GetNbins();
+	         double xl = h1->GetBinLowEdge(1);
+	         double xh = h1->GetBinLowEdge(c)+h1->GetBinWidth(c);
+
+         //cout<<"lower "<<xl<< endl;
+         //cout<<"higher"<<xh<< endl;cout<<"number of bins "<<c<< endl;
+
+         string divide= "JTy1_"+C[i+1]+"_"+C[i];                          //1111111111111
+         TH1 *h3 = new TH1F("h3",divide.c_str(),c,xl,xh);
+         h3->Sumw2();
+         h3->Divide(h2,h1,1,1,"B"); // B for binomial errors
+
+
+
+
+
+
+          h3->Scale(L[i]); // multiplying with constant
+
+          h3->SetMaximum(1.4); //to set the y axis maximum
+          h3->SetMinimum(0.5); // to set the y axis minimum
+          h3->GetXaxis()->SetTitle("PT");
+          h3->GetYaxis()->SetTitle("Cross section");
+          h3->SetAxisRange(F[i]+20,F[i]+120); //was140-210 and later 160 to 210 
+
+
+
+
+
+         func1= new TF1("func1","0.5+0.5*TMath::Erf((x-[0])/TMath::Abs([1]+[2]*log(x)+[3]*(log(x)*log(x))))",30,200);
+         float za=F[i]+15;
+         float zb=40/1.5;
+         float zc=(0.5)*zb;
+         float zd=(1/20)*zb;
+         func1->SetParameters(za,zb,zc,zd);
+         func1->SetParNames("Mu","sigma0","Sigma1","sigma2");
+         gStyle->SetOptFit(10111);
+         h3->Fit("func1");
+         h3->Draw();
+
+  TLine *line = new TLine(F[i]+20,1,F[i]+120,1);
+   line->SetLineColor(kRed);
+   line->Draw();
+
+
+   TLine *lin = new TLine(F[i]+20,0.98,F[i]+120,0.98);
+   lin->SetLineColor(3);
+   lin->Draw();
+
+
+string printing = "trijet"+C[i+1]+"_"+C[i]+"y1.eps";                               //1111111111111
+c1->SaveAs(printing.c_str());
+
+delete h1;
+delete h2;
+delete h3;
+
+            }//close for inner for loop 
+
+
+                   }
+

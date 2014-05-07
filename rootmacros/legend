@@ -1,0 +1,10 @@
+ TLegend *leg = new TLegend(0.3831256,0.2824926,0.751582,0.4805341,NULL,"brNDC");
+  leg->SetFillColor(kWhite);
+
+  leg->AddEntry(h1,"Residual","pl");
+  leg->AddEntry((TObject*)0,titeta[i].c_str(),"");  //add text without any legend
+  leg->AddEntry(eta0_08,"Inverse log, Quadratic fits ","l");
+  leg->SetBorderSize(0);
+  leg->SetTextSize(0.05);   
+  leg->SetTextFont(42);
+  leg->Draw("same");

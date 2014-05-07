@@ -1,0 +1,7 @@
+
+assert "Kt6" in JET_TYPE
+
+
+
+  newstr = oldstr.replace("M", "")
+

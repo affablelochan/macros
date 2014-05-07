@@ -1,0 +1,8 @@
+du -sh folder
+
+gives the gb of the folder
+
+
+df -h 
+
+gives the total sspace availabel in hard disk ;) 

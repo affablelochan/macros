@@ -1,0 +1,72 @@
+Package for slimming D3PD
+2010/09/05: v3
+- sub.sh:
+    improve number of jobs counting
+
+
+1, Contents
+- sub.sh (prun job submit script)
+- slim.py (slimming python script)
+- datasets (list of input datasets and output datasets)
+- mon.sh (script of monitoring panda jobs)
+  *psequencer (https://twiki.cern.ch/twiki/bin/view/Atlas/PandaSequencer) may be useful (previously, it was not useful for me by many reason...)
+
+2, To do before submitting jobs
+
+-Change datasets file
+--format should be 
+inputDataset1 outputDataset1
+inputDataset2 outputDataset2
+.
+.
+
+--You have to use name beginning with "user.nickname." for output dataset
+  (see https://savannah.cern.ch/forum/forum.php?forum_id=1259)
+
+-Change "username" in function "kin()" in mon.sh
+
+
+
+--Changing points are:
+
+-Modify slim.py as you like
+--Changing points are:
+
+---Contents In Slimming D3PD defined in:
+#*****set brances*****   
+to
+#*****end set brances*****
+----You can choose branches what you want
+
+
+
+
+
+---Event Selection
+----You can see some exapmles of event selection below
+#new tree
+----default setting save all events
+
+----Below "#----- GoodRunList example", you can change GRL definitions
+
+3, run
+- Just run:
+./sub.sh
+
+-then the jobs will be submitted
+-You can get file "list" which has jobIDs in panda
+
+-mon.sh is monitoring such jobs
+-You just have to do:
+./mon.sh
+
+-If the job was finished w/o any fails, it will be written in "donelist"
+-If the job was finished with some fails, the job will be retried automatically and listed in monitoring list
+
+4, If you got error like:
+ERROR : No candidate. Release:Atlas-15.6.10 was not found in ['ANALY_NCG-INGRID-PT']. Could not find sites
+you just have to change release in sub.sh (--athenaTag=a.b.c.d) to available release listed in 
+http://panda.cern.ch:25980/server/pandamon/query?overview=releaseinfo
+
+This athena release will be used only for the setup of root, then the athena release itself is not so important
+

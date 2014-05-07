@@ -1,0 +1,10 @@
+awk is a very great unix command. 
+
+Example is shown below. Uncomment the second line and check what 
+happens. 
+
+
+echo "$i" | awk '{gsub(/\/$/,"*/")}{ print "cd " $1 }' >>final
+
+#echo "ndfjldfn/" | awk '{gsub(/\/$/,"*/")}{print "cd " $1 }'
+
